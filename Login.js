@@ -1,24 +1,37 @@
 'use strict';
 
-var React = require('react');
-var ReactNative = require('react-native');
+import React, { Component } from 'react';
+import {
+  AppRegistry,
+  StyleSheet,
+  Image,
+  Text,
+  View
+} from 'react-native';
 
-var Text = ReactNative.Text;
-var View = ReactNative.View;
-var StyleSheet = ReactNative.StyleSheet;
+export class Login extends Component {
 
-var Login = React.createClass({
+    constructor(props) {
+        super(props);
+    }
 
-    render: function() {
+    render() {
+            let styles = StyleSheet.create({
+                container: {
+                    flex: 1,
+                    backgroundColor: '#F5FCFF'
+                },
+                logo: {
+                    width: 66,
+                    height: 55
+                }
+            });
+
         return (
-            <Text style={styles.container}>Hello</Text>
+            <View style={styles.container}>
+                <Image style={styles.logo}
+                    source={require('image!pilar')} />
+            </View>
         );
     }
-});
-
-var styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#F5FCFF'
-    }
-});
-module.exports = Login;
+}

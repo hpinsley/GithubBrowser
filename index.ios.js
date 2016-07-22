@@ -12,9 +12,9 @@ import {
   View
 } from 'react-native';
 
-var Login = require('./Login');
+import {Login} from './Login';
 
-class GithubBrowser extends Component {
+export class GithubBrowser extends Component {
   render() {
     return (
       <Login />
