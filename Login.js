@@ -63,7 +63,10 @@ export class Login extends Component {
                 <Text style={styles.heading}>
                     Github Browser
                 </Text>
-                <TextInput style={styles.input} placeholder="Github Username" />
+                <TextInput
+                    style={styles.input}
+                    onChangeText={(text) => console.log(text)}
+                    placeholder="Github Username" />
                 <TextInput secureTextEntry={true} style={styles.input} placeholder="Github Password" />
                 <TouchableHighlight style={styles.button}>
                     <Text style={styles.buttonText}>Log In</Text>
