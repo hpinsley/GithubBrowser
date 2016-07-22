@@ -97,5 +97,13 @@ export class Login extends Component {
     onLoginPressed() {
         console.log(`You are logging in with username: ${this.state.username} and password: ${this.state.password}`);
         this.setState({showProgress: true});
+
+        fetch('https://api.github.com/search/repositories?q=react')
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                this.setState({showProgress: false});
+            })
+            .catch(err => console.error(err));
     }
 }
