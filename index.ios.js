@@ -14,10 +14,12 @@ import {
 
 class GithubBrowser extends Component {
   render() {
+    var message = 'hello there';
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          {message}
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
