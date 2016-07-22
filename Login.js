@@ -65,13 +65,23 @@ export class Login extends Component {
                 </Text>
                 <TextInput
                     style={styles.input}
-                    onChangeText={(text) => console.log(text)}
+                    onChangeText={(text) => this.setState({username:text})}
                     placeholder="Github Username" />
-                <TextInput secureTextEntry={true} style={styles.input} placeholder="Github Password" />
-                <TouchableHighlight style={styles.button}>
+                <TextInput
+                    secureTextEntry={true}
+                    style={styles.input}
+                    onChangeText={(text) => this.setState({password:text})}
+                    placeholder="Github Password" />
+                <TouchableHighlight
+                    onPress={this.onLoginPressed.bind(this)}
+                    style={styles.button}>
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableHighlight>
             </View>
         );
+    }
+
+    onLoginPressed() {
+        console.log(`You are logging in with username: ${this.state.username} and password: ${this.state.password}`);
     }
 }
