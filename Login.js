@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import {
+  ActivityIndicatorIOS,
   AppRegistry,
   StyleSheet,
   Image,
@@ -15,6 +16,10 @@ export class Login extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            showProgress: false
+        };
     }
 
     render() {
@@ -53,6 +58,9 @@ export class Login extends Component {
                     fontSize: 22,
                     color: '#fff',
                     alignSelf: 'center'
+                },
+                loader: {
+                    marginTop: 20
                 }
             });
 
@@ -77,11 +85,17 @@ export class Login extends Component {
                     style={styles.button}>
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableHighlight>
+
+                <ActivityIndicatorIOS
+                    animating={this.state.showProgress}
+                    size="large"
+                    style={styles.loader} />
             </View>
         );
     }
 
     onLoginPressed() {
         console.log(`You are logging in with username: ${this.state.username} and password: ${this.state.password}`);
+        this.setState({showProgress: true});
     }
 }
