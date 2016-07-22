@@ -7,6 +7,7 @@ import {
   Image,
   Text,
   TextInput,
+  TouchableHighlight,
   View
 } from 'react-native';
 
@@ -40,6 +41,18 @@ export class Login extends Component {
                     fontSize: 18,
                     borderWidth: 1,
                     borderColor: '#48bbec'
+                },
+                button: {
+                    height: 50,
+                    backgroundColor: '#48bbec',
+                    alignSelf: 'stretch',
+                    marginTop: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                },
+                buttonText: {
+                    fontSize: 22,
+                    color: '#fff'
                 }
             });
 
@@ -51,7 +64,10 @@ export class Login extends Component {
                     Github Browser
                 </Text>
                 <TextInput style={styles.input} placeholder="Github Username" />
-                <TextInput secureTextEntry='true' style={styles.input} placeholder="Github Password" />
+                <TextInput secureTextEntry={true} style={styles.input} placeholder="Github Password" />
+                <TouchableHighlight style={styles.button}>
+                    <Text style={styles.buttonText}>Log In</Text>
+                </TouchableHighlight>
             </View>
         );
     }
