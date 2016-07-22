@@ -47,12 +47,12 @@ export class Login extends Component {
                     backgroundColor: '#48bbec',
                     alignSelf: 'stretch',
                     marginTop: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center'
+                    justifyContent: 'center'
                 },
                 buttonText: {
                     fontSize: 22,
-                    color: '#fff'
+                    color: '#fff',
+                    alignSelf: 'center'
                 }
             });
 
