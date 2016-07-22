@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   Text,
+  TextInput,
   View
 } from 'react-native';
 
@@ -19,11 +20,26 @@ export class Login extends Component {
             let styles = StyleSheet.create({
                 container: {
                     flex: 1,
-                    backgroundColor: '#F5FCFF'
+                    backgroundColor: '#F5FCFF',
+                    paddingTop: 40,
+                    alignItems: 'center',
+                    padding: 10
                 },
                 logo: {
                     width: 66,
                     height: 55
+                },
+                heading: {
+                    fontSize: 30,
+                    marginTop: 10
+                },
+                input: {
+                    height: 50,
+                    marginTop: 10,
+                    padding: 4,
+                    fontSize: 18,
+                    borderWidth: 1,
+                    borderColor: '#48bbec'
                 }
             });
 
@@ -31,6 +47,11 @@ export class Login extends Component {
             <View style={styles.container}>
                 <Image style={styles.logo}
                     source={require('image!pilar')} />
+                <Text style={styles.heading}>
+                    Github Browser
+                </Text>
+                <TextInput style={styles.input} placeholder="Github Username" />
+                <TextInput secureTextEntry='true' style={styles.input} placeholder="Github Password" />
             </View>
         );
     }
