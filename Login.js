@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import {
-  ActivityIndicatorIOS,
+  ActivityIndicator,
   AppRegistry,
   StyleSheet,
   Image,
@@ -11,6 +11,8 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
+
+import buffer from 'buffer';
 
 export class Login extends Component {
 
@@ -86,7 +88,7 @@ export class Login extends Component {
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableHighlight>
 
-                <ActivityIndicatorIOS
+                <ActivityIndicator
                     animating={this.state.showProgress}
                     size="large"
                     style={styles.loader} />
@@ -98,7 +100,14 @@ export class Login extends Component {
         console.log(`You are logging in with username: ${this.state.username} and password: ${this.state.password}`);
         this.setState({showProgress: true});
 
-        fetch('https://api.github.com/search/repositories?q=react')
+        let b = new buffer.Buffer(this.state.username + ':' + this.state.password);
+        let encodedAuth = b.toString('base64');
+
+        fetch('https://api.github.com/user', {
+                headers: {
+                    Authorization: 'Basic ' + encodedAuth
+                }
+            })
             .then(response => response.json())
             .then(result => {
                 console.log(result);
