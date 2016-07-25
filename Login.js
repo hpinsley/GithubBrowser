@@ -119,9 +119,7 @@ export class Login extends Component {
                 username: this.state.username,
                 password: this.state.password
             }, (results) => {
-
-                this.setState(results);
-                this.setState({showProgress: false});
+                this.setState(Object.assign({showProgress: false}, results));
             });
     }
 }
