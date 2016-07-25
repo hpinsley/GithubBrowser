@@ -66,7 +66,8 @@ export class Login extends Component {
                 },
                 error: {
                     fontSize: 22,
-                    color: '#ff0000'
+                    color: 'red',
+                    paddingTop: 10
                 }
             });
 
