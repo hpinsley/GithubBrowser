@@ -120,6 +120,9 @@ export class Login extends Component {
                 password: this.state.password
             }, (results) => {
                 this.setState(Object.assign({showProgress: false}, results));
+                if (this.state.results && this.props.onLogin) {
+                    this.props.onLogin()
+                }
             });
     }
 }
