@@ -113,35 +113,14 @@ export class Login extends Component {
         console.log(`You are logging in with username: ${this.state.username} and password: ${this.state.password}`);
         this.setState({showProgress: true});
 
-        let b = new buffer.Buffer(this.state.username + ':' + this.state.password);
-        let encodedAuth = b.toString('base64');
+        let authSvc = require('./AuthService');
+        authSvc.login(
+            {
+                username: this.state.username,
+                password: this.state.password
+            }, (results) => {
 
-        fetch('https://api.github.com/user', {
-                headers: {
-                    Authorization: 'Basic ' + encodedAuth
-                }
-            })
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    this.setState({loginError: null});
-                }
-                else if (response.status == 401) {
-                    this.setState({loginError: 'Unknown username or password!!'});
-                }
-                else {
-                    this.setState({loginError: 'Unknown error ' + response.status});
-                }
-
-                return this.state.loginError ? {} : response.json();
-            })
-            .then(result => {
-                console.log(result);
-                this.setState({showProgress: false});
-            })
-            .catch(err => {
-                console.error(err);
-            })
-            .finally(() => {
+                this.setState(results);
                 this.setState({showProgress: false});
             });
     }
