@@ -63,17 +63,19 @@ export class Login extends Component {
                 },
                 loader: {
                     marginTop: 20
+                },
+                error: {
+                    fontSize: 22,
+                    color: '#ff0000'
                 }
             });
 
         var errorCtrl = <View />
 
-        if (this.state.badCredentials) {
-            errorCtrl = <Text style={styles.error}>Unknown username or password</Text>
+        if (this.state.loginError) {
+            errorCtrl = <Text style={styles.error}>{this.state.loginError}</Text>
         }
-        else if (this.state.unknownError) {
-            errorCtrl = <Text style={styles.error}>Unknown error</Text>
-        }
+
         return (
             <View style={styles.container}>
                 <Image style={styles.logo}
@@ -120,22 +122,23 @@ export class Login extends Component {
             })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
-                    return response;
+                    this.setState({loginError: null});
+                }
+                else if (response.status == 401) {
+                    this.setState({loginError: 'Unknown username or password!!'});
+                }
+                else {
+                    this.setState({loginError: 'Unknown error ' + response.status});
                 }
 
-                throw {
-                    badCredentials: response.status == 401,
-                    unknownError: response.status != 401
-                }
+                return this.state.loginError ? {} : response.json();
             })
-            .then(response => response.json())
             .then(result => {
                 console.log(result);
                 this.setState({showProgress: false});
             })
             .catch(err => {
-                //console.error(err);
-                this.setState(err);
+                console.error(err);
             })
             .finally(() => {
                 this.setState({showProgress: false});
