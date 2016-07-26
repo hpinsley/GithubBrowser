@@ -6,6 +6,7 @@ import {
     Text,
     View
 } from 'react-native';
+import AuthService from './AuthService';
 
 export class Feed extends Component {
 
@@ -21,6 +22,28 @@ export class Feed extends Component {
         };
     }
 
+    componentDidMount() {
+        this.fetchFeed();
+    }
+
+    fetchFeed() {
+        AuthService.getAuthInfo((err, authInfo) => {
+            var url = `https://api.github.com/users/${authInfo.user.login}/received_events`;
+            console.log(`Fetching feed from ${url}`);
+
+            fetch(url, {
+                headers: authInfo.header
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(responseData => {
+                console.log(responseData);
+                let feedData = responseData.filter(ev => ev.type == 'PushEvent');
+                this.setState({dataSource: this.state.dataSource.cloneWithRows(feedData)});
+            });
+        });
+    }
     renderRow(rowData) {
         return <Text style={{
             color: '#333',

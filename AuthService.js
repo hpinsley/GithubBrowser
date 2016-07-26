@@ -29,7 +29,7 @@ class AuthService {
 
             let authInfo = {
                 header: {
-                    Authorization: unpacked[authKey]
+                    Authorization: 'Basic ' + unpacked[authKey]
                 },
                 user: JSON.parse(unpacked[userKey])
             };
