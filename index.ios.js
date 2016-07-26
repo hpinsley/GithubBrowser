@@ -15,6 +15,7 @@ import {
 
 import {Login} from './Login';
 import AuthService from './AuthService';
+import {AppContainer} from './AppContainer';
 
 export class GithubBrowser extends Component {
 
@@ -48,11 +49,7 @@ export class GithubBrowser extends Component {
     }
     else if (this.state.isLoggedIn) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.welcome}>
-            Welcome to Github Browser
-          </Text>
-        </View>
+          <AppContainer />
       );
     }
     else {
@@ -68,22 +65,6 @@ export class GithubBrowser extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
   loader: {
       marginTop: 20
   }
