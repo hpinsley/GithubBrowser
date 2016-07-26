@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Image,
+  TabBarIOS,
   Text,
   View
 } from 'react-native';
@@ -14,6 +15,7 @@ export class AppContainer extends Component {
         super(props);
 
         this.state = {
+            selectedTab: 'feed'
         };
     }
 
@@ -33,11 +35,16 @@ export class AppContainer extends Component {
         });
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Tabs coming soon!
-                </Text>
-            </View>
+            <TabBarIOS style={styles.container}>
+                <TabBarIOS.Item
+                    title='Feed'
+                    selected={this.state.selectedTab == 'feed'}
+                    // icon={require('image!pilar')}
+                    onPress={() => this.setState({selectedTab: 'feed'})}
+                >
+                    <Text style={styles.welcome}>This is the feed</Text>
+                </TabBarIOS.Item>
+            </TabBarIOS>
         );
     }
 }

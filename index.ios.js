@@ -9,7 +9,6 @@ import {
   ActivityIndicator,
   AppRegistry,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
 
