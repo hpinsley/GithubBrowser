@@ -1,4 +1,5 @@
 import buffer from 'buffer';
+import {AsyncStorage} from 'react-native';
 
 class AuthService {
     login(cred, cb) {
@@ -12,9 +13,20 @@ class AuthService {
         })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
-                cb({
-                    loginError: null,
-                    results: response.json()
+
+                let userData = response.json();
+
+                AsyncStorage.multiSet([
+                    ['auth', encodedAuth],
+                    ['user', JSON.stringify(userData)]
+                ], (err) => {
+                    if (err) {
+                        throw err;
+                    }
+                    cb({
+                        loginError: null,
+                        results: userData
+                    });
                 });
             }
             else if (response.status == 401) {
@@ -30,7 +42,7 @@ class AuthService {
         })
         .catch(err => {
             cb({
-                loginError: 'Unknown login error'
+                loginError: 'Unknown login error ' + err.toString()
             });
         });
     }
