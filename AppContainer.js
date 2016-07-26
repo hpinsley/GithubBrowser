@@ -28,7 +28,7 @@ export class AppContainer extends Component {
                 backgroundColor: '#F5FCFF'
             },
             welcome: {
-                fontSize: 20,
+                fontSize: 30,
                 textAlign: 'center',
                 margin: 10
             }
@@ -44,6 +44,16 @@ export class AppContainer extends Component {
                 >
                     <Text style={styles.welcome}>This is the feed</Text>
                 </TabBarIOS.Item>
+
+                <TabBarIOS.Item
+                    title='Search'
+                    selected={this.state.selectedTab == 'search'}
+                    // icon={require('image!pilar')}
+                    onPress={() => this.setState({selectedTab: 'search'})}
+                >
+                    <Text style={styles.welcome}>This is the search tab</Text>
+                </TabBarIOS.Item>
+
             </TabBarIOS>
         );
     }
