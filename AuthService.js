@@ -49,38 +49,32 @@ class AuthService {
         })
         .then(response => {
             if (response.status >= 200 && response.status < 300) {
+                return response.json();
+            }
 
-                let userData = response.json();
+            if (response.status == 401) {
+                throw { loginError: 'Unknown username or password!!' };
+            }
 
-                AsyncStorage.multiSet([
-                    [authKey, encodedAuth],
-                    [userKey, JSON.stringify(userData)]
-                ], (err) => {
-                    if (err) {
-                        throw err;
-                    }
-                    cb({
-                        loginError: null,
-                        results: userData
-                    });
-                });
-            }
-            else if (response.status == 401) {
-                cb({
-                    loginError: 'Unknown username or password!!'
-                });
-            }
-            else {
-                cb({
-                    loginError: 'Unknown error ' + response.status}
-                );
-            }
+            throw { loginError: 'Unknown error ' + response.status };
         })
-        .catch(err => {
-            cb({
-                loginError: 'Unknown login error ' + err.toString()
+        .then(userData => {
+            console.log('Saving ' + JSON.stringify(userData));
+
+            AsyncStorage.multiSet([
+                [authKey, encodedAuth],
+                [userKey, JSON.stringify(userData)]
+            ], (err) => {
+                if (err) {
+                    throw err;
+                }
+                cb({
+                    loginError: null,
+                    results: userData
+                });
             });
-        });
+        })
+        .catch(err => cb(err));
     }
 }
 
