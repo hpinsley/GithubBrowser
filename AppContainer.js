@@ -9,6 +9,8 @@ import {
   View
 } from 'react-native';
 
+import {Feed} from './Feed';
+
 export class AppContainer extends Component {
 
     constructor(props) {
@@ -39,10 +41,10 @@ export class AppContainer extends Component {
                 <TabBarIOS.Item
                     title='Feed'
                     selected={this.state.selectedTab == 'feed'}
-                    // icon={require('image!pilar')}
+                    //icon={require('image!pilar')}
                     onPress={() => this.setState({selectedTab: 'feed'})}
                 >
-                    <Text style={styles.welcome}>This is the feed</Text>
+                    <Feed />
                 </TabBarIOS.Item>
 
                 <TabBarIOS.Item
