@@ -76,11 +76,17 @@ export class Feed extends Component {
                     <Text style={{ backgroundColor: '#fff'}}>
                         {moment(rowData.created_at).fromNow()}
                     </Text>
-                    <Text style={{ backgroundColor: '#fff'}}>
+                    <Text style={{
+                        backgroundColor: '#fff',
+                        fontWeight: '600'
+                    }}>
                         {rowData.actor.login}
                     </Text>
                     <Text style={{ backgroundColor: '#fff'}}>
                         {rowData.payload.ref.replace('refs/heads/', '')}
+                    </Text>
+                    <Text style={{ backgroundColor: '#fff'}}>
+                        at <Text style={{fontWeight: '600'}}>{rowData.repo.name}</Text>
                     </Text>
                 </View>
             </View>
@@ -108,7 +114,8 @@ export class Feed extends Component {
         return (
             <View style={{
                 flex: 1,
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                backgroundColor: 'white'
             }}>
                 <ListView
                     style={{
