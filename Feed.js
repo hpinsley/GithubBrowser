@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 import AuthService from './AuthService';
+import moment from 'moment';
 
 export class Feed extends Component {
 
@@ -68,6 +69,20 @@ export class Feed extends Component {
                         width: 36,
                         borderRadius: 18
                     }} />
+
+                <View style={{
+                    paddingLeft: 20
+                }}>
+                    <Text style={{ backgroundColor: '#fff'}}>
+                        {moment(rowData.created_at).fromNow()}
+                    </Text>
+                    <Text style={{ backgroundColor: '#fff'}}>
+                        {rowData.actor.login}
+                    </Text>
+                    <Text style={{ backgroundColor: '#fff'}}>
+                        {rowData.payload.ref.replace('refs/heads/', '')}
+                    </Text>
+                </View>
             </View>
         );
     }
