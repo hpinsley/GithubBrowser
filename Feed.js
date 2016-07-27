@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import {
     ActivityIndicator,
+    Image,
     ListView,
     Text,
     View
@@ -50,16 +51,25 @@ export class Feed extends Component {
             });
         });
     }
-    renderRow(rowData) {
-        console.log('Rendering a row', rowData);
 
-        return <Text style={{
-            color: '#333',
-            backgroundColor: '#fff',
-            alignSelf: 'center'
-        }}>
-        {rowData.actor.login}
-        </Text>
+    renderRow(rowData) {
+        return (
+            <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                padding: 20,
+                alignItems: 'center',
+                borderColor: '#D7D7D7',
+                borderBottomWidth: 1
+            }}>
+                <Image source={{ uri: rowData.actor.avatar_url }}
+                    style={{
+                        height: 36,
+                        width: 36,
+                        borderRadius: 18
+                    }} />
+            </View>
+        );
     }
 
     render() {
@@ -86,6 +96,9 @@ export class Feed extends Component {
                 justifyContent: 'flex-start'
             }}>
                 <ListView
+                    style={{
+                        marginTop: 40
+                    }}
                     enableEmptySections={true}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)} />
