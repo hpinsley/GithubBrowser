@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import {
+    ActivityIndicator,
     ListView,
     Text,
     View
@@ -18,7 +19,8 @@ export class Feed extends Component {
         });
 
         this.state = {
-            dataSource: ds.cloneWithRows(['A', 'B', 'C'])
+            dataSource: ds.cloneWithRows([]),
+            showProgress: true
         };
     }
 
@@ -40,28 +42,51 @@ export class Feed extends Component {
             .then(responseData => {
                 console.log(responseData);
                 let feedData = responseData.filter(ev => ev.type == 'PushEvent');
-                this.setState({dataSource: this.state.dataSource.cloneWithRows(feedData)});
+                console.log('feeddata', feedData);
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(feedData),
+                    showProgress: false
+                });
             });
         });
     }
     renderRow(rowData) {
+        console.log('Rendering a row', rowData);
+
         return <Text style={{
             color: '#333',
             backgroundColor: '#fff',
             alignSelf: 'center'
         }}>
-        {rowData}
+        {rowData.actor.login}
         </Text>
     }
 
     render() {
 
+        if (this.state.showProgress) {
+            return (
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center'
+                }}>
+                <ActivityIndicator
+                    animating={true}
+                    size="large"
+                    style={{
+                        marginTop: 20
+                    }} />
+                </View>
+            );
+        }
+
         return (
             <View style={{
                 flex: 1,
-                //justifyContext: 'flex-start'
+                justifyContent: 'flex-start'
             }}>
                 <ListView
+                    enableEmptySections={true}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)} />
             </View>
