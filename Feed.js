@@ -9,8 +9,10 @@ import {
     TouchableHighlight,
     View
 } from 'react-native';
+
 import AuthService from './AuthService';
 import moment from 'moment';
+import {PushPayload} from './PushPayload';
 
 export class Feed extends Component {
 
@@ -56,11 +58,23 @@ export class Feed extends Component {
 
     pressRow(rowData) {
         console.log('You pressed on ' + rowData.actor.login);
+
+        // Note that since we embedded the feed component as the initial route in the
+        // Navigator component used in AppContainer, we can reference the very same navigator
+        // in our props.
+        this.props.navigator.push({
+            title: 'Push Event',
+            component: PushPayload,
+            passProps: {
+                pushEvent: rowData
+            }
+        });
     }
-    
+
     renderRow(rowData) {
         return (
             <TouchableHighlight
+                underlayColor='#ddd'
                 onPress={() => this.pressRow(rowData)}>
 
                 <View style={{
@@ -124,7 +138,8 @@ export class Feed extends Component {
             <View style={{
                 flex: 1,
                 justifyContent: 'flex-start',
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                marginTop: 20
             }}>
                 <ListView
                     style={{

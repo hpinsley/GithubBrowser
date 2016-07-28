@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
   StyleSheet,
   Image,
+  NavigatorIOS,
   TabBarIOS,
   Text,
   View
@@ -44,7 +45,15 @@ export class AppContainer extends Component {
                     //icon={require('image!pilar')}
                     onPress={() => this.setState({selectedTab: 'feed'})}
                 >
-                    <Feed />
+                    <NavigatorIOS style={{
+                        flex: 1
+                    }}
+                    initialRoute={{
+                        component: Feed,
+                        title: 'Feed'
+                    }}>
+
+                    </NavigatorIOS>
                 </TabBarIOS.Item>
 
                 <TabBarIOS.Item
