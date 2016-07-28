@@ -37,7 +37,7 @@ export class PushPayload extends Component {
                 padding: 10
             }}>
                 <Text>
-                    {commit.sha.substring(0,6)} - {commit.message}
+                    <Text style={styles.bold}>{commit.sha.substring(0,6)}</Text> - {commit.message}
                 </Text>
             </View>
         )
