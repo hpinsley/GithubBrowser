@@ -11,6 +11,7 @@ import {
 
 import AuthService from './AuthService';
 import moment from 'moment';
+import {RepoRow} from './RepoRow';
 
 export class SearchResults extends Component {
 
@@ -55,7 +56,7 @@ export class SearchResults extends Component {
 
     renderRow(repo) {
         return (
-            <Text style={{fontSize: 15}}>{repo.html_url}</Text>
+            <RepoRow repo={repo}></RepoRow>
         );
     }
     doSearch() {
