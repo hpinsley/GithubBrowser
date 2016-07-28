@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 
 import {Feed} from './Feed';
+import {Search} from './Search';
 
 export class AppContainer extends Component {
 
@@ -29,11 +30,6 @@ export class AppContainer extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
                 backgroundColor: '#F5FCFF'
-            },
-            welcome: {
-                fontSize: 30,
-                textAlign: 'center',
-                margin: 10
             }
         });
 
@@ -49,8 +45,8 @@ export class AppContainer extends Component {
                         flex: 1
                     }}
                     initialRoute={{
-                        component: Feed,
-                        title: 'Feed'
+                        title: 'Feed',
+                        component: Feed
                     }}>
 
                     </NavigatorIOS>
@@ -62,7 +58,15 @@ export class AppContainer extends Component {
                     // icon={require('image!pilar')}
                     onPress={() => this.setState({selectedTab: 'search'})}
                 >
-                    <Text style={styles.welcome}>This is the search tab</Text>
+                    <NavigatorIOS style={{
+                        flex: 1
+                    }}
+                    initialRoute={{
+                        title: 'Search',
+                        component: Search,
+                    }}>
+
+                    </NavigatorIOS>
                 </TabBarIOS.Item>
 
             </TabBarIOS>

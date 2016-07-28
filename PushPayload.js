@@ -34,6 +34,7 @@ export class PushPayload extends Component {
                 borderColor: '#D7D7D7',
                 borderBottomWidth: 1,
                 paddingBottom: 20,
+                paddingTop: 20,
                 padding: 10
             }}>
                 <Text>
