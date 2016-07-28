@@ -8,6 +8,8 @@ import {
     View
 } from 'react-native';
 
+import moment from 'moment';
+
 export class PushPayload extends Component {
 
     constructor(props) {
@@ -30,9 +32,22 @@ export class PushPayload extends Component {
                 justifyContent: 'flex-start',
                 alignItems: 'center'
             }}>
-                <Text>
-                Hello There {this.props.pushEvent.actor.login}
+                <Image source={{uri: this.props.pushEvent.actor.avatar_url}}
+                    style={{
+                        height: 120,
+                        width: 120,
+                        borderRadius: 60
+                    }} />
+                <Text style={{
+                    paddingTop: 20,
+                    paddingBottom: 20,
+                    fontSize: 20
+                }}>
+                    {moment(this.props.pushEvent.created_at).fromNow()}
                 </Text>
+                <Text>{this.props.pushEvent.actor.login}</Text>
+                <Text>{this.props.pushEvent.payload.ref.replace('refs/heads/', '')}</Text>
+                <Text>{this.props.pushEvent.repo.name}</Text>
             </View>
         );
     }
