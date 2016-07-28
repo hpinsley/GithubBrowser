@@ -9,6 +9,7 @@ import {
     View
 } from 'react-native';
 
+import AuthService from './AuthService';
 import moment from 'moment';
 
 export class SearchResults extends Component {
@@ -26,6 +27,10 @@ export class SearchResults extends Component {
         };
     }
 
+    componentDidMount() {
+        this.doSearch();
+    }
+
     render() {
         return (
             <View style={{
@@ -35,7 +40,42 @@ export class SearchResults extends Component {
                 alignItems: 'center'
             }}>
                 <Text>Search for {this.state.searchText}</Text>
+
+                <ListView
+                    style={{
+                        marginTop: 40
+                    }}
+                    enableEmptySections={true}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)} />
+
             </View>
         );
+    }
+
+    renderRow(repo) {
+        return (
+            <Text style={{fontSize: 15}}>{repo.html_url}</Text>
+        );
+    }
+    doSearch() {
+        AuthService.getAuthInfo((err, authInfo) => {
+            let searchTerm = encodeURIComponent(this.state.searchText);
+            var url = `https://api.github.com/search/repositories?q=${searchTerm}`;
+            console.log(`Searching repositories with ${url}`);
+
+            fetch(url, {
+                headers: authInfo.header
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(responseData => {
+                console.log(responseData);
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(responseData.items)
+                })
+            });
+        });
     }
 }
