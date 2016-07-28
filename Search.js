@@ -8,6 +8,8 @@ import {
     View
 } from 'react-native';
 
+import {SearchResults} from './SearchResults';
+
 export class Search extends Component {
 
     constructor(props) {
@@ -21,6 +23,13 @@ export class Search extends Component {
     onSearchPressed() {
         console.log(`Start the search for ${this.state.searchText}`);
         this.setState({searchText: ''});
+        this.props.navigator.push({
+            title: 'Search Results',
+            component: SearchResults,
+            passProps: {
+                searchText: this.state.searchText
+            }
+        });
     }
 
     render() {
