@@ -34,9 +34,9 @@ export class RepoRow extends Component {
             }}>
                 <Image source={{uri: this.state.repo.owner.avatar_url}}
                     style={{
-                        height: 40,
-                        width: 40,
-                        borderRadius: 20
+                        height: 36,
+                        width: 36,
+                        borderRadius: 18
                     }} />
 
                 <Text style={{
