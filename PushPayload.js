@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
     Image,
     ListView,
+    StyleSheet,
     Text,
     View
 } from 'react-native';
@@ -20,10 +21,27 @@ export class PushPayload extends Component {
         });
 
         this.state = {
-            dataSource: ds.cloneWithRows([])
+            dataSource: ds.cloneWithRows(props.pushEvent.payload.commits),
+            pushEvent: props.pushEvent
         };
     }
 
+    renderRow(commit) {
+        return (
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                borderColor: '#D7D7D7',
+                borderBottomWidth: 1,
+                paddingBottom: 20,
+                padding: 10
+            }}>
+                <Text>
+                    {commit.sha.substring(0,6)} - {commit.message}
+                </Text>
+            </View>
+        )
+    }
     render() {
         return (
             <View style={{
@@ -32,7 +50,7 @@ export class PushPayload extends Component {
                 justifyContent: 'flex-start',
                 alignItems: 'center'
             }}>
-                <Image source={{uri: this.props.pushEvent.actor.avatar_url}}
+                <Image source={{uri: this.state.pushEvent.actor.avatar_url}}
                     style={{
                         height: 120,
                         width: 120,
@@ -43,12 +61,32 @@ export class PushPayload extends Component {
                     paddingBottom: 20,
                     fontSize: 20
                 }}>
-                    {moment(this.props.pushEvent.created_at).fromNow()}
+                    {moment(this.state.pushEvent.created_at).fromNow()}
                 </Text>
-                <Text>{this.props.pushEvent.actor.login}</Text>
-                <Text>{this.props.pushEvent.payload.ref.replace('refs/heads/', '')}</Text>
-                <Text>{this.props.pushEvent.repo.name}</Text>
+                <Text><Text style={styles.bold}>{this.state.pushEvent.actor.login}</Text> pushed to</Text>
+                <Text style={styles.bold}>{this.state.pushEvent.payload.ref.replace('refs/heads/', '')}</Text>
+                <Text>at <Text style={styles.bold}>{this.state.pushEvent.repo.name}</Text></Text>
+
+                <Text style={{
+                    paddingTop: 40,
+                    fontSize: 20
+                }}>{this.state.pushEvent.payload.commits.length} Commits
+                </Text>
+
+                <ListView dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                    contentInset={{
+                        top: -50
+                    }}
+                />
             </View>
         );
     }
 }
+
+var styles = StyleSheet.create({
+    bold: {
+        fontWeight: '800',
+        fontSize: 16
+    }
+});
