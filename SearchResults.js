@@ -2,10 +2,12 @@
 
 import React, { Component } from 'react';
 import {
+    ActivityIndicator,
     Image,
     ListView,
     StyleSheet,
     Text,
+    TouchableHighlight,
     View
 } from 'react-native';
 
@@ -24,7 +26,8 @@ export class SearchResults extends Component {
 
         this.state = {
             dataSource: ds.cloneWithRows([]),
-            searchText: props.searchText
+            searchText: props.searchText,
+            showProgress: true
         };
     }
 
@@ -33,6 +36,22 @@ export class SearchResults extends Component {
     }
 
     render() {
+        if (this.state.showProgress) {
+            return (
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center'
+                }}>
+                <ActivityIndicator
+                    animating={true}
+                    size="large"
+                    style={{
+                        marginTop: 20
+                    }} />
+                </View>
+            );
+        }
+
         return (
             <View style={{
                 flex: 1,
@@ -54,11 +73,22 @@ export class SearchResults extends Component {
         );
     }
 
+    repoClick(repo) {
+        console.log(`Please show detail for ${repo.html_url}!`);
+    }
+
     renderRow(repo) {
         return (
-            <RepoRow repo={repo}></RepoRow>
+            <View>
+                <TouchableHighlight onPress={() => this.repoClick(repo)}>
+                    <View>
+                        <RepoRow repo={repo}></RepoRow>
+                    </View>
+                </TouchableHighlight>
+            </View>
         );
     }
+
     doSearch() {
         AuthService.getAuthInfo((err, authInfo) => {
             let searchTerm = encodeURIComponent(this.state.searchText);
@@ -76,6 +106,9 @@ export class SearchResults extends Component {
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(responseData.items)
                 })
+            })
+            .finally(() => {
+                this.setState({showProgress: false})
             });
         });
     }
